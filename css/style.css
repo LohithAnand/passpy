@@ -1,0 +1,21 @@
+#header {
+  background-color:black;
+  color:white;
+  text-align:center;
+  padding:5px;
+}
+#section {
+  padding:10px;
+  max-height: 560px;
+  overflow-y: auto;
+}
+#footer {
+  background-color:black;
+  color:white;
+  clear:both;
+  text-align:center;
+  padding:5px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

