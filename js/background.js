@@ -51,6 +51,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           }
           return true;
           break;
+        case 'delete' :
+          var transaction = db.transaction(["pkl_logs"], "readwrite");
+          var store = transaction.objectStore("pkl_logs");
+          var objectStoreRequest = store.clear();
+          objectStoreRequest.onsuccess = function(event) {
+            sendResponse({'success' : true});
+          };
+          return true;
+          break;
         default:
           console.log("Unknown DB Operation, try save");
       }

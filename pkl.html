@@ -12,6 +12,17 @@
       </div>
       <div id="section">
         <div class="container">
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li id="clear-logs"><a href="#"><i class="glyphicon glyphicon-trash"></i> Clear logs</a></li>
+              <li data-toggle="modal" data-target="#change-pass-modal"><a href="#"><i class="glyphicon glyphicon-lock"></i> Change passcode</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="container">
           <div class="col-sm-12">
             <table class="table table-hover">
               <thead>
@@ -32,6 +43,33 @@
         <span>Copyright &copy; Lohith</span>
       </div>
     </div>
+    <script type="text/javascript" src="libs/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="libs/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="libs/jquery/bootbox.min.js"></script>
     <script type="text/javascript" src="js/report.js"></script>
+    <!-- Change Passcode Modal -->
+    <div class="modal fade" id="change-pass-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Change passcode</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="new-passcode">New Passcode : </label>
+                <input id="new-passcode" type="password" class="form-control" />
+              </div>
+            </form>
+            <div id="passcode-validation-msg" class="alert alert-danger hide" role="alert" style="margin-top:4%;">Passcode cannot be empty!</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="save-passcode" type="button" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

