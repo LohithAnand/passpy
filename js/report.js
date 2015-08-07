@@ -29,10 +29,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     this.generateRow = function(details,counter) {
       var row = ''+
-      '<tr>'+
+      '<tr class="entry">'+
         '<th>'+counter+'</th>'+
-        '<td><a href="'+details.url+'">'+this.extractDomain(details.url)+'</td>'+
-        '<td>'+JSON.stringify(details.formData, null, 4).replace(/[{}]/g, "")+'</td>'+
+        '<td><a href="'+details.value.url+'">'+this.extractDomain(details.value.url)+'</td>'+
+        '<td>'+JSON.stringify(details.value.formData, null, 4).replace(/[{}]/g, "")+'</td>'+
+        '<td>'+
+          details.value.timeStamp+
+          '<span class="pull-right deleteEntry cursor-pointer" data-id="'+details.key+'">'+
+            '<i class="glyphicon glyphicon-trash">'+
+          '</span>'+
+        '</td>'+
       '</tr>';
       return row;
     };
@@ -43,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
       bgConnector.sql({'operation' : 'retrieve'}, function(response) {
         if(response.hasOwnProperty('logs')) {
           var counter = 1;
+          response.logs.reverse();
           Array.prototype.forEach.call(response.logs, function(details) {
             var tbody = document.getElementById('list-container');
             if(details) {
@@ -96,9 +103,27 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     };
 
+    this.registerDeleteEntryEvent = function() {
+      jQuery('#list-container').on('click', '.deleteEntry', function() {
+        var target = jQuery(this);
+        var entryId = target.data('id');
+        bootbox.confirm("Are you sure?", function(result) {
+          if(result) {
+            var bgConnector = new BackgroundConnector();
+            bgConnector.sql({'operation' : 'delete', 'id' : entryId}, function(response) {
+              if(response.success) {
+                target.closest('.entry').remove();
+              }
+            });
+          }
+        });
+      });
+    };
+
     this.registerEvents = function() {
       this.registerClearLogsEvent();
       this.registerChangePassEvent();
+      this.registerDeleteEntryEvent();
     };
 
   }

@@ -25,6 +25,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case 'save':
           var transaction = db.transaction(["pkl_logs"], "readwrite");
           var store = transaction.objectStore("pkl_logs");
+          var d = new Date();
+          request.data.timeStamp = d.toString();
           var storeAddRequest = store.add(request.data);
           storeAddRequest.onerror = function(e) {
               console.log("error while adding data to store",e.target.error.name);
@@ -41,8 +43,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           cursor.onsuccess = function(e) {
             var res = e.target.result;
             if(res) {
-                if(typeof res.value === 'object') {
-                  records[res.key] = res.value;
+                if(typeof res.value === 'object' && res.value !== null) {
+                    records.push({
+                      key : res.key,
+                      value : res.value
+                    });
                 }
                 res.continue();
             } else {
@@ -54,10 +59,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case 'delete' :
           var transaction = db.transaction(["pkl_logs"], "readwrite");
           var store = transaction.objectStore("pkl_logs");
-          var objectStoreRequest = store.clear();
-          objectStoreRequest.onsuccess = function(event) {
-            sendResponse({'success' : true});
-          };
+          if(request.hasOwnProperty('id')) {
+            var objectStoreRequest = store.delete(parseInt(request.id));
+            objectStoreRequest.onsuccess = function(event) {
+              sendResponse({'success' : true});
+            };
+          } else {
+            var objectStoreRequest = store.clear();
+            objectStoreRequest.onsuccess = function(event) {
+              sendResponse({'success' : true});
+            };
+          }
           return true;
           break;
         default:
@@ -79,6 +91,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           if(request.pin && typeof request.pin === 'string') {
             localStorage.setItem(pinKey,request.pin);
           }
+          break;
         default:
           console.log("Unknown PIN Operation, try get,set");
       }
