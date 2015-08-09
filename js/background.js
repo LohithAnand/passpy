@@ -99,6 +99,25 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case 'SHOWLOGS' :
       chrome.tabs.create({'url': 'pkl.html'});
       break;
+    case 'MISC' :
+      var operation = request.operation;
+      switch (operation) {
+        case 'clearhistory':
+          var since = request.since;
+          if(since) {
+            chrome.browsingData.remove({
+              "since": since
+            }, {
+              "history": true
+            }, function() {
+              console.log("history cleared since : ",since);
+            });
+          }
+          break;
+        default:
+          console.log("Unknown Misc Operation, try clearhistory");
+      }
+      break;
     default:
       console.log("Unknown Action, try DB,SHOWLOGS,PIN");
   }

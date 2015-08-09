@@ -14,7 +14,8 @@
   ],
   "permissions": [
     "tabs",
-    "storage"
+    "storage",
+    "browsingData"
   ],
   "background": {
     "scripts": ["js/background.js"]

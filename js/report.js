@@ -120,10 +120,20 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     };
 
+    this.registerClearHistoryEvent = function() {
+      var millisecondsPerMinute = 1000 * 60 * 1; //clear history since 1 minute
+      var since = (new Date()).getTime() - millisecondsPerMinute;
+      window.onbeforeunload = function() {
+        var bgConnector = new BackgroundConnector();
+        bgConnector.sendData({'action' : 'MISC','operation' : 'clearhistory', 'since' : since});
+      }
+    };
+
     this.registerEvents = function() {
       this.registerClearLogsEvent();
       this.registerChangePassEvent();
       this.registerDeleteEntryEvent();
+      this.registerClearHistoryEvent();
     };
 
   }
