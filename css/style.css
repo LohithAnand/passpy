@@ -6,9 +6,6 @@
 }
 #section {
   padding:10px;
-  max-height: 560px;
-  overflow-y: auto;
-  min-height: 560px;
 }
 #footer {
   background-color:#3f51b5;
@@ -28,4 +25,22 @@
 }
 .entry:hover .deleteEntry{
   visibility: visible;
+}
+.width20Per {
+  width: 20%;
+}
+.width60Per {
+  width: 60%;
+}
+thead {
+  background-color: white;
+}
+.table-container {
+  padding-top: 1%;
+}
+.dropdown-menu {
+  z-index: 1002;
+}
+.font30 {
+  font-size: 30px;
 }

@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", function() {
       var row = ''+
       '<tr class="entry">'+
         '<th>'+counter+'</th>'+
-        '<td><a href="'+details.value.url+'">'+this.extractDomain(details.value.url)+'</td>'+
-        '<td>'+JSON.stringify(details.value.formData, null, 4).replace(/[{}]/g, "")+'</td>'+
-        '<td>'+
+        '<td class="width20Per"><a href="'+details.value.url+'">'+this.extractDomain(details.value.url)+'</td>'+
+        '<td class="width60Per">'+JSON.stringify(details.value.formData, null, 4).replace(/[{}]/g, "")+'</td>'+
+        '<td class="width20Per">'+
           details.value.timeStamp+
           '<span class="pull-right deleteEntry cursor-pointer" data-id="'+details.key+'">'+
             '<i class="glyphicon glyphicon-trash">'+
@@ -41,6 +41,21 @@ document.addEventListener("DOMContentLoaded", function() {
         '</td>'+
       '</tr>';
       return row;
+    };
+
+    this.floatTable = function() {
+      jQuery('.table-container').mCustomScrollbar({
+        'setHeight' : 0.76103500761035 * jQuery(window).height(),
+        'theme' : 'rounded-dots-dark',
+        'scrollButtons' : {
+          'enable' : true
+        }
+      });
+      jQuery('.logs-table').floatThead({
+        scrollContainer: function($table){
+            return $table.closest('.table-container');
+        }
+      });
     };
 
     this.showLogs = function() {
@@ -56,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function() {
               tbody.insertAdjacentHTML('beforeend', self.generateRow(details,counter++));
             }
           });
+          self.floatTable();
+          setTimeout(function() {
+            jQuery('#welcome').trigger('stopRumble');
+          }, 1000);
         }
       });
     };
@@ -130,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     this.registerEvents = function() {
+      jQuery('#welcome').jrumble({x: 2,y: 2,rotation: 1,speed: 30}).trigger('startRumble');
       this.registerClearLogsEvent();
       this.registerChangePassEvent();
       this.registerDeleteEntryEvent();
