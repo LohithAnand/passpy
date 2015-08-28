@@ -3,7 +3,7 @@
   "name": "Passpy",
   "short_name": "passpy",
   "description": "Password Spy is a light-weight key-logger that logs username, emailid and password used in webpages into client(browser) database",
-  "version": "0.0.0.5",
+  "version": "0.0.0.6",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

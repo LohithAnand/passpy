@@ -27,13 +27,21 @@ document.addEventListener("DOMContentLoaded", function() {
       return a.hostname || url.slice(0,25);
     };
 
+    this.listDetails = function(details) {
+        var list = '';
+        for(key in details.value.formData) {
+          list += key + ' : ' + details.value.formData[key] + '<br/>';
+        }
+        return list;
+    };
+
     this.generateRow = function(details,counter) {
       var row = ''+
       '<tr class="entry">'+
         '<th>'+counter+'</th>'+
-        '<td class="width20Per"><a href="'+details.value.url+'">'+this.extractDomain(details.value.url)+'</td>'+
-        '<td class="width60Per">'+JSON.stringify(details.value.formData, null, 4).replace(/[{}]/g, "")+'</td>'+
-        '<td class="width20Per">'+
+        '<td class="width20Per breakWord maxWidth100"><a href="'+details.value.url+'">'+this.extractDomain(details.value.url)+'</td>'+
+        '<td class="width60Per breakWord maxWidth400">'+this.listDetails(details)+'</td>'+
+        '<td class="width20Per breakWord maxWidth100">'+
           details.value.timeStamp+
           '<span class="pull-right deleteEntry cursor-pointer" data-id="'+details.key+'">'+
             '<i class="glyphicon glyphicon-trash">'+
@@ -149,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     this.registerEvents = function() {
-      jQuery('#welcome').jrumble({x: 2,y: 2,rotation: 1,speed: 30}).trigger('startRumble');
+      jQuery('#welcome').jrumble({x: 4,y: 1,rotation: 2,speed: 50}).trigger('startRumble');
       this.registerClearLogsEvent();
       this.registerChangePassEvent();
       this.registerDeleteEntryEvent();

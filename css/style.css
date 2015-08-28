@@ -32,7 +32,19 @@
 .width60Per {
   width: 60%;
 }
-thead {
+.breakWord {
+  word-wrap: break-word;
+}
+.maxWidth100 {
+  max-width: 100px;
+}
+.fontSize85Per {
+  font-size: 85%;
+}
+.maxWidth400 {
+  max-width: 400px;
+}
+.logs-table thead {
   background-color: white;
 }
 .table-container {
